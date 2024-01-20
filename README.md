@@ -20,29 +20,29 @@ Or you can find a simple cheat sheet inside the package. Use it alongsidethe  de
   * [Installing on Shader](#installing-on-shader)
   * [Installing on Shader Graph](#installing-on-shader-graph)
 * [Shader](#shader)
-  * Folder
-  * ConditionFolder
-  * FeatureFolder
-  * Texture
-  * Remapping
-  * QuickSlider
-  * Vector
-  * TextField
-  * Space & Separator
-  * Dedicated Drawers
-  * Demo
-* Shader Graph
-  * Folder
-  * ConditionFolder
-  * FeatureFolder
-  * Texture
-  * Remapping
-  * Vector
-  * ScaleOffset
-  * TextField
-  * Space & Separator
-  * Demo
-* Advanced Options
+  * [Folder](#folder)
+  * [ConditionFolder](#conditionfolder)
+  * [FeatureFolder](#featurefolder)
+  * [Texture](#texture)
+  * [Remapping](#remapping)
+  * [QuickSlider](#quickslider)
+  * [Vector](#vector)
+  * [TextField](#textfield)
+  * [Space & Separator](#space--separator)
+  * [Dedicated Drawers](#dedicated-drawers)
+  * [Demo](#shadergui-demo)
+* [Shader Graph](#shader-graph)
+  * [Folder](#folder-1)
+  * [ConditionFolder](#conditionfolder-1)
+  * [FeatureFolder](#featurefolder-1)
+  * [Texture](#texture-1)
+  * [Remapping](#remapping-1)
+  * [Vector](#vector-1)
+  * [ScaleOffset](#scaleoffset)
+  * [TextField](#textfield-1)
+  * [Space & Separator](#space--separator-1)
+  * [Demo](#shadergraphgui-demo)
+* [Advanced Options](#advanced-options)
 
 ---
 
