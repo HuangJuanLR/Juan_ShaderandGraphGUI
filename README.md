@@ -497,7 +497,7 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 - All texture will be Thumnail by default
 - Use double && before _InlineProperty to hide it if the texture is not given
 - If we want a HDR Color, just make the following Color HDR
-- If the inline property is a _BOOLEANKEYWORD, it will be enabled is the texture is assigned and disabled is the texture is not given
+- If the inline property is a _BOOLEANKEYWORD, it will be enabled if the texture is assigned and disabled is the texture is not given
 
 | Syntax                               | Drawer                                                                          |
 |:------------------------------------ |:------------------------------------------------------------------------------- |
@@ -526,7 +526,7 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 |:------------ |:------- |
 | @2VectorName | Vector2 |
 | @3VectorName | Vector3 |
-|              | Vector4 |
+| @4VectorName | Vector4 |
 
 ![Image description](./resources/graphvectorblackboard.png)
 
@@ -534,11 +534,9 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 
 ### ScaleOffset
 
-| Syntax       | Drawer  |
-|:------------ |:------- |
-| @2VectorName | Vector2 |
-| @3VectorName | Vector3 |
-| @4VectorName | Vector4 |
+| Syntax      | Drawer      |
+|:----------- |:----------- |
+| #VectorName | ScaleOffset |
 
 ![Image description](./resources/graphscaleoffsetblackboard.png)
 
@@ -575,8 +573,6 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 - Simple demo of how all these drawers combined look
 
 - Advanced Options folder will always be drawn for global behavior control
-
-- By the time I create this, I haven't implemented Texture with KEYWORD. So I use a FeatureFolder to 
 
 - Find this at Shader -> ShaderGraphGUI -> ShaderGraphGUI Demo.shadergraph
 
