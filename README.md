@@ -292,6 +292,8 @@ _Color_Two("Color Two", Color) = (1,1,1,1)
 
 - If no Range is given, the default range will be 0 to 1
 
+- Syntax has symbol limitation, so we can't make the range negative. If we want a negative range value, we have to change it directly on the editor
+
 | Syntax                   | Drawer                 |
 |:------------------------ |:---------------------- |
 | [QuickSlider]            | QuickSlider            |
