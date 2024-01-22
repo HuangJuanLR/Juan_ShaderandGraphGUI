@@ -434,11 +434,11 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 
 - In HLSL, the properties' references would be better to only contain one underscore in front while names contain consecutive underscores might be reserved
 
-- E.g. &BaseColor's reference will be __BaseColor by default containing two consecutive underscores
+- E.g. &BaseColor's reference sometimes will be __BaseColor by default containing two consecutive underscores (I try to reproduce this situation, but it doesn't happen every time)
 
-- We should manually remove one underscore to avoid any unpredictable errors
+- If this happened, We should manually remove one underscore to avoid any unpredictable errors
 
-- Shader Graph will report warnings about this but only when these properties are used
+- Notices that this case doesn't always happen, sometimes Unity gives the reference only one underscore. But if this happened, Shader Graph will report warnings about this but only when these properties are used
 
 ### Folder
 
