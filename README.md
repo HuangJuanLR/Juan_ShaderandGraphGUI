@@ -1,4 +1,6 @@
-# Juan_Shader&GraphGUI
+# Juan Shader&GraphGUI
+
+![Image description](./resources/JuanShader&GraphGUI-Cover.png)
 
 Efficient GUI for both ShaderLab and ShaderGraph
 
@@ -14,8 +16,21 @@ English:
 
 Or you can find a simple cheat sheet inside the package. Use it alongsidethe  demo materials to learn all syntax usage
 
+## Notes
+
+- Shader may not work in some Unity version, but the GUI will work just fine
+
+- Support for Built-in Render Pipeline, URP and HDRP, but the demo shaders are creating in URP
+
+- Tested with Unity version 2020.3.29f1, 2021.3.15f1 and 2022.3.16f1
+
+- ShaderGUI tested with 2019.3.14f1, but ShaderGraphGUI won't work if Shader Graph version older than 10.0
+
 ---
 
+* [Download](#download)
+  * [Download from Asset Store](#download-from-asset-store)
+  * [Manually Download](#manually-download)
 * [Getting Started](#getting-started)
   * [Installing on Shader](#installing-on-shader)
   * [Installing on Shader Graph](#installing-on-shader-graph)
@@ -43,6 +58,25 @@ Or you can find a simple cheat sheet inside the package. Use it alongsidethe  de
   * [Space & Separator](#space--separator-1)
   * [Demo](#shadergraphgui-demo)
 * [Advanced Options](#advanced-options)
+* [License](#license)
+
+---
+
+## Download
+
+### Download from Asset Store
+
+- Search for Juan Shader&GraphGUI in Asset Store and Click "Add to My Assets"
+
+- Inside Unity, go to Package Manager and download Juan Shader&GraphGUI
+
+- Click import to add it to your project
+
+### Manually Download
+
+- Go to the release page and download Juan_Shader&GraphGUI.unitypackage
+
+- Drag it into your Unity project and click import
 
 ---
 
@@ -562,3 +596,7 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 - Lightmap Emission Property
 
 - This will always be drawn to Shader/ShaderGraph GUI
+
+## License
+
+This work is licensed under MIT License.
