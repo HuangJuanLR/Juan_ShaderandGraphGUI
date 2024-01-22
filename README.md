@@ -483,7 +483,6 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 ### FeatureFolder
 
 - [+] -> FeatureFolder
-- The shader feature's name will be __SHADER_FEATURE_NAME, space will become underscore, and two underscore in front
 
 | Syntax                 | Drawer         |
 |:---------------------- |:-------------- |
