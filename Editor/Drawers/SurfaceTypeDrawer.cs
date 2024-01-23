@@ -48,13 +48,13 @@ namespace JuanShaderEditor
 
             EditorGUI.BeginChangeCheck();
             
-            BaseShaderGUI.SurfaceType surfaceType = (BaseShaderGUI.SurfaceType)value;
-            surfaceType = (BaseShaderGUI.SurfaceType)EditorGUI.EnumPopup(position, label, surfaceType);
+            SurfaceType surfaceType = (SurfaceType)value;
+            surfaceType = (SurfaceType)EditorGUI.EnumPopup(position, label, surfaceType);
 
             if (EditorGUI.EndChangeCheck())
             {  
                 property.floatValue = (float)surfaceType;   
-                if(surfaceType == BaseShaderGUI.SurfaceType.Opaque)
+                if(surfaceType == SurfaceType.Opaque)
                 {
                     if(alphaClip)
                     {
@@ -76,27 +76,27 @@ namespace JuanShaderEditor
                 }
                 else // SurfaceType.Transparent
                 {
-                    BaseShaderGUI.BlendMode blendMode = (BaseShaderGUI.BlendMode)mat.GetFloat("_Blend");
+                    BlendMode blendMode = (BlendMode)mat.GetFloat("_Blend");
 
                     mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
                     mat.DisableKeyword("_SURFACE_TYPE_TRANSPARENT");
 
                     switch(blendMode)
                     {
-                        case BaseShaderGUI.BlendMode.Alpha:
+                        case BlendMode.Alpha:
                             SetMaterialBlendMode(mat, 
                                     UnityEngine.Rendering.BlendMode.SrcAlpha, UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
                         break;
-                        case BaseShaderGUI.BlendMode.Premultiply:
+                        case BlendMode.Premultiply:
                             SetMaterialBlendMode(mat, 
                                     UnityEngine.Rendering.BlendMode.One, UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
                             mat.EnableKeyword("_ALPHAPREMULTIPLY_ON");
                         break;
-                        case BaseShaderGUI.BlendMode.Additive:
+                        case BlendMode.Additive:
                             SetMaterialBlendMode(mat, 
                                     UnityEngine.Rendering.BlendMode.SrcAlpha, UnityEngine.Rendering.BlendMode.One);
                         break;
-                        case BaseShaderGUI.BlendMode.Multiply:
+                        case BlendMode.Multiply:
                             SetMaterialBlendMode(mat, 
                                     UnityEngine.Rendering.BlendMode.DstColor, UnityEngine.Rendering.BlendMode.Zero);
                             mat.EnableKeyword("_ALPHAPREMULTIPLY_ON");

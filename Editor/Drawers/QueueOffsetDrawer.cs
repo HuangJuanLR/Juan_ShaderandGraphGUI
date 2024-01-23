@@ -30,7 +30,7 @@ namespace JuanShaderEditor
 {
     public class QueueOffsetDrawer : MaterialPropertyDrawer
     {
-        private BaseShaderGUI.SurfaceType surfaceType;
+        private SurfaceType surfaceType;
         
         int renderQueue;
         bool alphaClip;
@@ -41,7 +41,7 @@ namespace JuanShaderEditor
 
             if (mat.HasProperty("_Surface"))
             {
-                surfaceType = (BaseShaderGUI.SurfaceType)mat.GetFloat("_Surface");
+                surfaceType = (SurfaceType)mat.GetFloat("_Surface");
             }
 
             if (mat.HasProperty("_AlphaClip"))
@@ -61,7 +61,7 @@ namespace JuanShaderEditor
             {
                 property.floatValue = value;
                 
-                if(surfaceType == BaseShaderGUI.SurfaceType.Opaque)
+                if(surfaceType == SurfaceType.Opaque)
                 {
                     if(alphaClip)
                     {

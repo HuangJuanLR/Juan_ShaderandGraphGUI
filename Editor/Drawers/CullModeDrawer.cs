@@ -29,22 +29,22 @@ namespace JuanShaderEditor
 {
     public class CullModeDrawer : MaterialPropertyDrawer
     {
-        private BaseShaderGUI.RenderFace renderFace;
+        private RenderFace renderFace;
 
         public override void OnGUI(Rect position, MaterialProperty property, string label, MaterialEditor materialEditor)
         {
             float value = property.floatValue;
             Material mat = materialEditor.target as Material;
 
-            renderFace = (BaseShaderGUI.RenderFace)value;
+            renderFace = (RenderFace)value;
             EditorGUI.BeginChangeCheck();
 
-            value = EditorGUI.Popup(position, label, (int)value, Enum.GetNames(typeof(BaseShaderGUI.RenderFace)));
+            value = EditorGUI.Popup(position, label, (int)value, Enum.GetNames(typeof(RenderFace)));
 
             if(EditorGUI.EndChangeCheck())
             {
                 property.floatValue = value;
-                if((BaseShaderGUI.RenderFace)value == BaseShaderGUI.RenderFace.Both)
+                if((RenderFace)value == RenderFace.Both)
                 {
                     if((DoubleSidedNormalMode)mat.GetFloat("_DoubleSidedNormalMode") != DoubleSidedNormalMode.None)
                     {

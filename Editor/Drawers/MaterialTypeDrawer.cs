@@ -29,15 +29,6 @@ namespace JuanShaderEditor
 {
 	public class MaterialTypeDrawer : MaterialPropertyDrawer
 	{
-		public enum MaterialType
-		{
-			Standard = 0,
-			Anisotropic = 1,
-			Iridescence = 2,
-			SubsurfaceScattering = 3,
-			Translucent = 4,
-		}
-
 		public override void OnGUI(Rect position, MaterialProperty property, String label, MaterialEditor materialEditor)
 		{
 			Material material = materialEditor.target as Material;

@@ -29,14 +29,6 @@ namespace JuanShaderEditor
 {
 	public class SpecularOcclusionModeDrawer : MaterialPropertyDrawer
 	{
-		public enum SpecOcclusionMode
-		{
-			Off = 0,
-			FromAmbientOcclusion = 1,
-			FromBentNormalsAndAO = 2,
-			FromGI = 3
-		}
-
 		public override void OnGUI(Rect position, MaterialProperty property, String label, MaterialEditor materialEditor)
 		{
 			Material material = materialEditor.target as Material;

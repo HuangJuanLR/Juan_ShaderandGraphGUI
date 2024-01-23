@@ -24,19 +24,13 @@ OTHER DEALINGS IN THE SOFTWARE.
 using System;
 using UnityEngine;
 using UnityEditor;
+using UnityEditor.Rendering.BuiltIn.ShaderGraph;
 
 namespace JuanShaderEditor
 {
-    public enum DoubleSidedNormalMode
-    {
-        Mirror,
-        Flip,
-        None
-    }
-    
     public class DoubleSidedNormalModeDrawer : MaterialPropertyDrawer
     {
-        BaseShaderGUI.RenderFace renderFace;
+        private RenderFace renderFace;
         
         public override void OnGUI(Rect position, MaterialProperty property, string label, MaterialEditor materialEditor)
         {
@@ -44,9 +38,9 @@ namespace JuanShaderEditor
             Material mat = materialEditor.target as Material;
             if(mat.HasProperty("_Cull"))
             {
-                renderFace = (BaseShaderGUI.RenderFace)mat.GetFloat("_Cull");
+                renderFace = (RenderFace)mat.GetFloat("_Cull");
 
-                if(renderFace == BaseShaderGUI.RenderFace.Both)
+                if(renderFace == RenderFace.Both)
                 {
                     EditorGUI.BeginChangeCheck();
                     value = EditorGUI.Popup(position, label, (int)value, Enum.GetNames(typeof(DoubleSidedNormalMode)));
