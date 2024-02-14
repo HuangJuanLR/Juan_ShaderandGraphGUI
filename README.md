@@ -28,6 +28,8 @@ Want to see new features of the latest version? Please refer to [CHANGELOG](./C
 
 - ShaderGUI tested with 2019.3.14f1, but ShaderGraphGUI won't work if Shader Graph version older than 10.0
 
+- Surface Options and Advanced Options are only tested with URP
+
 ---
 
 * [Download](#download)
@@ -179,7 +181,7 @@ We can also put a `(folder name)` after Close to manually pair them up for reada
 
 ### ConditionFolder
 
-- ConditionFolder has basically the same feauture as Folder with condition above, but with indented GUI style
+- `ConditionFolder` has basically the same feauture as `Folder` with condition above, but with indented GUI style
 
 | Syntax                                           | Drawer                                          |
 |:------------------------------------------------ |:----------------------------------------------- |
@@ -221,7 +223,7 @@ _Float("Float", Range(0, 1)) = 0
 
 ### FeatureFolder
 
-- FeatureFolder will draws a toggle in its right side to control a certain shader feature
+- `FeatureFolder` will draws a toggle in its right side to control a certain shader feature
 
 | Syntax                                 | Drawer         |
 |:-------------------------------------- |:-------------- |
@@ -278,9 +280,9 @@ _Color_Two("Color Two", Color) = (1,1,1,1)
 
 - When using remapping with three Floats, the first Float is just for displaying. 
 
-- Min and max value's name should be the first Float's name plus "Min" or "Max" (case sensitive)
+- Min and max value's name should be the first Float's name plus `Min` or `Max"` (case sensitive)
 
-- When using remapping with Vector, Vector.x will be min value and Vector.y for max value
+- When using remapping with Vector, `Vector.x` will be min value and `Vector.y` for max value
 
 - The property's default value will be used as the default min and max value
 
@@ -439,7 +441,7 @@ _Color_Two("Color Two", Color) = (1,1,1,1)
 
 ![Image description](./resources/graphfolderblackboard.png)
 
-- How to read it ? When we found a [$], then look for the corresponding `[Close]` syntax.
+- How to read it ? When we found a `[$]`, then look for the corresponding `[Close]` syntax.
 
 - In Shader Graph, it would be better to put a folder name after `[Close]` syntax. Because we need a property to implement a certain syntax, so we must make sure every property has different names
 
