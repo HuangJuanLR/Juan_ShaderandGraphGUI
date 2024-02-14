@@ -189,11 +189,15 @@ namespace JuanShaderEditor
 			
 				GUI.backgroundColor = ShaderGUIStyle.labelColor;
 				
-				bool toggle = false;
+				bool toggle = true;
 
-				if (!toggles.TryGetValue(toggleName, out toggle))
+				if (!toggles.TryGetValue(toggleName, out var storedToggle))
 				{
 					toggles.Add(toggleName, toggle);
+				}
+				else
+				{
+					toggle = storedToggle;
 				}
 
 				toggle = EditorGUILayout.BeginFoldoutHeaderGroup(toggle, title, 

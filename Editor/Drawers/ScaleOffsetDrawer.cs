@@ -76,9 +76,7 @@ namespace JuanShaderEditor
                 EditorGUI.PrefixLabel(labelRect, offsetTex);
                 offset = EditorGUI.Vector2Field(valueRect, GUIContent.none, offset);
                 
-                // Using an empty LabelField has the same function as Space()
-                // EditorGUILayout.LabelField("");
-                EditorGUILayout.Space(EditorGUIUtility.standardVerticalSpacing + EditorGUIUtility.singleLineHeight);
+                EditorGUILayout.LabelField("");
             }
             EditorGUILayout.EndVertical();
             

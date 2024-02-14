@@ -27,7 +27,6 @@ Material:
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
   - _USEMASKMAP
-  - __EMISSION
   m_InvalidKeywords:
   - __USE_MASKMAP
   - __Use_MaskMap
@@ -35,7 +34,8 @@ Material:
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap: {}
+  stringTagMap:
+    RenderType: Opaque
   disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
@@ -120,8 +120,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaToMask: 0
     - _Blend: 0
+    - _BlendModePreserveSpecular: 0
     - _BumpScale: 1
+    - _CastShadows: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
     - _Cull: 2
@@ -130,6 +133,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _Detail_NormalIntensity: 1
     - _DstBlend: 0
+    - _EMISSION: 0
     - _EmissionIntensity: 0.5
     - _Emission_with_Base: 0
     - _EnvironmentReflections: 1
@@ -153,7 +157,9 @@ Material:
     - _USEMASKMAP: 1
     - _USEMASKMAP_MaskMap_Off_Folder: 0
     - _WorkflowMode: 1
+    - _ZTest: 4
     - _ZWrite: 1
+    - _ZWriteControl: 0
     - __Close_CloseMaskMapFolder: 0
     - __Close_Close_Surface_Input: 0
     - __Close_Detail_Inputs: 0
@@ -164,7 +170,7 @@ Material:
     - __Close_Use_MaskMap: 0
     - __Detail_Inputs: 0
     - __Detail_NormalIntensity: 2
-    - __EMISSION: 1
+    - __EMISSION: 0
     - __MaskMap_MaskMapFolder: 0
     - __MaskMap_MaskMap_Off_Folder: 0
     - __MaskMap_Off_MaskMap_Off_Folder: 0

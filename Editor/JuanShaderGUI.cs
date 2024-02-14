@@ -30,36 +30,26 @@ using JuanShaderEditor;
 
 namespace JuanShaderEditor
 {
-	public class JuanCustomShaderGUI : ShaderGUI
+	public class JuanCustomShaderGUI : JuanBaseShaderGUI
 	{
-		// ********************************
-		// Current Features:
-		// ********************************
-		// Folder, Feature Folder, Condition Folder
-		// Vector2, Vector3, Vector4
-		// Remapping
-		// QuickSlider
-		// Scale Offset
-		// Thumbnail Texture with Parameter
-		// Space 
-		// Separator 
-		
-		
-		private Material material;
-	    private bool defaultEditor;
 	    private IUniversalDrawer containerDrawer;
-	    
-	    private static Dictionary<string, bool> toggles = new Dictionary<string, bool>();
 	    
 	    public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
 	    {
-		    material = (Material)materialEditor.target;
-	        
-	        Material mat = materialEditor.target as Material;
-	        
-#if UNITY_2021_2_OR_NEWER
-            ValidateMaterial(mat);
-#endif
+			base.OnGUI(materialEditor, properties);
+			
+			isGraph = false;
+			
+			hasSurfaceOptions = IsAllowMaterialOverride(properties);
+
+			if (hasSurfaceOptions)
+			{
+				DrawFolder("Surface Options", () =>
+				{
+					DrawSurfaceOptions(material, materialEditor, properties);
+				});
+			}
+			
 	        
 	        if (Event.current.type == EventType.Layout) containerDrawer = BuildDrawer(material);
 
@@ -74,47 +64,9 @@ namespace JuanShaderEditor
 	        // Recreate Unity's Default Advanced Options Folder
 	        DrawFolder("Advanced Options", () => 
 	        {
-		        materialEditor.RenderQueueField();
-		        // This only shows up when gpu instancing is supported in shader
-		        materialEditor.EnableInstancingField();
-		        materialEditor.DoubleSidedGIField();
-		        materialEditor.LightmapEmissionProperty();
+		        DrawAdvancedOptions(material, materialEditor, properties);
 	        });
 
-	    }
-	    
-	    private void DrawFolder(string label, Action draw)
-	    {
-		    EditorGUILayout.BeginVertical(ShaderGUIStyle.Folder);
-		    {
-			    GUI.backgroundColor = ShaderGUIStyle.labelColor;
-			    string toggleName = material.GetHashCode() + "_" + label;
-
-			    bool toggle = false;
-
-			    if (!toggles.TryGetValue(toggleName, out toggle))
-			    {
-				    toggles.Add(toggleName, toggle);
-			    }
-	                
-			    toggle = EditorGUILayout.BeginFoldoutHeaderGroup(toggle, label, ShaderGUIStyle.FolderHeader);
-
-			    EditorGUILayout.EndFoldoutHeaderGroup();
-
-			    toggles[toggleName] = toggle;
-
-			    GUI.backgroundColor = ShaderGUIStyle.folderColor;
-
-			    if(toggle)
-			    {
-				    EditorGUILayout.BeginVertical(ShaderGUIStyle.NestedFolder);
-				    {
-					    draw();
-				    }
-				    EditorGUILayout.EndVertical();
-			    }
-		    }
-		    EditorGUILayout.EndVertical();
 	    }
 	    
 	    public static IUniversalDrawer BuildDrawer(Material material)
@@ -348,6 +300,9 @@ namespace JuanShaderEditor
 					    break;
 				    case "conditionfolder":
 					    drawer = new ConditionFolderDrawer();
+					    break;
+				    case "conditionblock":
+					    drawer = new ConditionBlockDrawer();
 					    break;
 			    }
 

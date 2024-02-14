@@ -29,17 +29,6 @@ using JuanShaderEditor;
 
 namespace JuanShaderEditor
 {
-    // ********************************
-    // Current Features:
-    // ********************************
-    // Folder, Feature Folder, Condition Folder
-    // Vector2, Vector3, Vector4
-    // Remapping
-    // Scale Offset
-    // Thumbnail Texture with Parameter
-    // Space Drawer
-    // Separator Drawer
-    
     public enum SubType
     {
         TexturePrefix,
@@ -65,17 +54,18 @@ namespace JuanShaderEditor
         Folder,
         FeatureFolder,
         ConditionFolder,
+        ConditionBlock,
         Text,
         
         DefaultMax,
     }
     
-    public class JuanCustomShaderGraphGUI : ShaderGUI
+    public class JuanCustomShaderGraphGUI : JuanBaseShaderGUI
     {
-        private Material material;
+        // private Material material;
         private IUniversalDrawer containerDrawer;
         
-        private static Dictionary<string, bool> toggles = new Dictionary<string, bool>();
+        // private static Dictionary<string, bool> toggles = new Dictionary<string, bool>();
         
         private static Dictionary<MaterialProperty, List<MaterialProperty>> subProps = new Dictionary<MaterialProperty, List<MaterialProperty>>();
 
@@ -108,6 +98,7 @@ namespace JuanShaderEditor
             { FolderType.Folder , "$"}, // $ is a Houdini like symbol
             { FolderType.FeatureFolder , "+"}, // + stands for adding feature
             { FolderType.ConditionFolder , "?"}, // ? stands for comparison
+            { FolderType.ConditionBlock, "!"},
             { FolderType.Text , "*"}, // * for annotation
 
             { FolderType.DefaultMax , "DefaultMax"},
@@ -115,62 +106,28 @@ namespace JuanShaderEditor
         
         public override void OnGUI(MaterialEditor materialEditor, MaterialProperty[] properties)
         {
-            material = materialEditor.target as Material;
-            
-            Material mat = materialEditor.target as Material;
-            
-#if UNITY_2021_2_OR_NEWER
-            ValidateMaterial(mat);
-#endif
-            
+            base.OnGUI(materialEditor, properties);
+
+            isGraph = true;
+
+            hasSurfaceOptions = IsAllowMaterialOverride(properties);
+
+            if (hasSurfaceOptions)
+            {
+                DrawFolder("Surface Options", () =>
+                {
+                    DrawSurfaceOptions(material, materialEditor, properties);
+                });
+            }
             
             if (Event.current.type == EventType.Layout) containerDrawer = BuildDrawer(material, properties);
             
             containerDrawer.Draw(materialEditor, material);
             
-            // Recreate Unity's Default Advanced Options Block
-            DrawFolder("Advanced Options", () => 
+            DrawFolder("Advanced Options", () =>
             {
-                
-                materialEditor.RenderQueueField();
-                materialEditor.EnableInstancingField();
-                materialEditor.DoubleSidedGIField();
-                materialEditor.LightmapEmissionProperty();
+                DrawAdvancedOptions(material, materialEditor, properties);
             });
-        }
-        
-        private void DrawFolder(string label, Action draw)
-        {
-            EditorGUILayout.BeginVertical(ShaderGUIStyle.Folder);
-            {
-                GUI.backgroundColor = ShaderGUIStyle.labelColor;
-                string toggleName = material.GetHashCode() + "_" + label;
-
-                bool toggle = false;
-
-                if (!toggles.TryGetValue(toggleName, out toggle))
-                {
-                    toggles.Add(toggleName, toggle);
-                }
-                
-                toggle = EditorGUILayout.BeginFoldoutHeaderGroup(toggle, label, ShaderGUIStyle.FolderHeader);
-
-                EditorGUILayout.EndFoldoutHeaderGroup();
-
-                toggles[toggleName] = toggle;
-                
-                GUI.backgroundColor = ShaderGUIStyle.folderColor;
-
-                if(toggle)
-                {
-                    EditorGUILayout.BeginVertical(ShaderGUIStyle.NestedFolder);
-                    {
-                        draw();
-                    }
-                    EditorGUILayout.EndVertical();
-                }
-            }
-            EditorGUILayout.EndVertical();
         }
         
         private static IUniversalDrawer BuildDrawer(Material material, MaterialProperty[] properties)
@@ -180,7 +137,6 @@ namespace JuanShaderEditor
             var curContainer = containerDrawer;
             
             List<MaterialProperty> drawerProps = new List<MaterialProperty>();
-
             
             MaterialProperty curParentProp = new MaterialProperty();
             
@@ -189,7 +145,7 @@ namespace JuanShaderEditor
                 MaterialProperty curProp = properties[i];
                 string displayName = curProp.displayName;
                 
-                // Ignore Hide In Inspector Properties
+                // HideInInspector Properties in Shader Graph are for controlling Surface Options/Advanced Options
                 if(curProp.flags.HasFlag(MaterialProperty.PropFlags.HideInInspector))
                 {
                     continue;
@@ -387,6 +343,9 @@ namespace JuanShaderEditor
                     case FolderType.ConditionFolder:
                         drawer = new ConditionFolderDrawer();
                         break;
+                    case FolderType.ConditionBlock:
+                        drawer = new ConditionBlockDrawer();
+                        break;
                 }
             }
             
@@ -492,6 +451,9 @@ namespace JuanShaderEditor
             
             return drawer?? new PropertiesDrawer();
         }
+
+
+        
         
         private static bool TryFindSubType(MaterialProperty prop, out SubType type)
         {

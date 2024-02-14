@@ -28,7 +28,7 @@ using UnityEngine;
 
 namespace JuanShaderEditor
 {
-	public class ConditionFolderDrawer : IUniversalDrawer
+	public class ConditionBlockDrawer : IUniversalDrawer
 	{
 		private IUniversalDrawer container;
 
@@ -50,7 +50,7 @@ namespace JuanShaderEditor
 
 		private bool invert = false;
 		
-		public ConditionFolderDrawer()
+		public ConditionBlockDrawer()
 		{
 			drawers = new List<IUniversalDrawer>();
 		}
@@ -156,15 +156,10 @@ namespace JuanShaderEditor
 			if(isMatchedCondition)
 			{
 				GUI.backgroundColor = ShaderGUIStyle.labelColor;
-				
-				EditorGUILayout.BeginVertical(ShaderGUIStyle.Folder);
+				for (var i = 0; i < drawers.Count; i++)
 				{
-					for (var i = 0; i < drawers.Count; i++)
-					{
-						drawers[i].Draw(editor, material);
-					}
+					drawers[i].Draw(editor, material);
 				}
-				EditorGUILayout.EndVertical();
 			}
 
 		}

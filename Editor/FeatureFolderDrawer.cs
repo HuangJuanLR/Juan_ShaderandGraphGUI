@@ -59,17 +59,23 @@ namespace JuanShaderEditor
 
 			GUI.backgroundColor = ShaderGUIStyle.labelColor;
 			
-			bool toggle = false;
+			bool toggle = true;
 
 			string toggleName = material.GetHashCode() + "_" + label;
 			
-			if(!toggles.TryGetValue(toggleName, out toggle))
+			if (!toggles.TryGetValue(toggleName, out var storedToggle))
 			{
 				toggles.Add(toggleName, toggle);
 			}
+			else
+			{
+				toggle = storedToggle;
+			}
+			
 			toggle = EditorGUILayout.BeginFoldoutHeaderGroup(toggle, label, ShaderGUIStyle.FeatureFolderHeader);
 
 			GUI.backgroundColor = active? ShaderGUIStyle.checkColor : ShaderGUIStyle.labelColor ;
+			
 			
 			var rect = GUILayoutUtility.GetLastRect();
 			rect.x += rect.width + 15;

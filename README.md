@@ -16,6 +16,8 @@ English:
 
 Or you can find a simple cheat sheet inside the package. Use it alongsidethe  demo materials to learn all syntax usage
 
+Want to see new features of the latest version? Please refer to [CHANGELOG](./CHANGELOG.md).
+
 ## Notes
 
 - Shader may not work in some Unity version, but the GUI will work just fine
@@ -37,6 +39,7 @@ Or you can find a simple cheat sheet inside the package. Use it alongsidethe  de
 * [Shader](#shader)
   * [Folder](#folder)
   * [ConditionFolder](#conditionfolder)
+  * [ConditionBlock](#conditionblock)
   * [FeatureFolder](#featurefolder)
   * [Texture](#texture)
   * [Remapping](#remapping)
@@ -44,11 +47,11 @@ Or you can find a simple cheat sheet inside the package. Use it alongsidethe  de
   * [Vector](#vector)
   * [TextField](#textfield)
   * [Space & Separator](#space--separator)
-  * [Dedicated Drawers](#dedicated-drawers)
   * [Demo](#shadergui-demo)
 * [Shader Graph](#shader-graph)
   * [Folder](#folder-1)
   * [ConditionFolder](#conditionfolder-1)
+  * [ConditionBlock](#conditionblock-1)
   * [FeatureFolder](#featurefolder-1)
   * [Texture](#texture-1)
   * [Remapping](#remapping-1)
@@ -57,7 +60,7 @@ Or you can find a simple cheat sheet inside the package. Use it alongsidethe  de
   * [TextField](#textfield-1)
   * [Space & Separator](#space--separator-1)
   * [Demo](#shadergraphgui-demo)
-* [Advanced Options](#advanced-options)
+* [Surface Options & Advanced Options](#surface-options-&-advanced-options)
 * [License](#license)
 
 ---
@@ -72,6 +75,8 @@ Or you can find a simple cheat sheet inside the package. Use it alongsidethe  de
 
 - Click import to add it to your project
 
+- Currently Pending 
+
 ### Manually Download
 
 - Go to the release page and download Juan_Shader&GraphGUI.unitypackage
@@ -84,13 +89,13 @@ Or you can find a simple cheat sheet inside the package. Use it alongsidethe  de
 
 ### Installing on Shader
 
-Add "CustomEditor "JuanShaderGUI"" to the end of your shader file
+Add `CustomEditor "JuanShaderGUI"` to the end of your shader file
 
 ![Image description](./resources/shaderlab_install.png)
 
 ### Installing on Shader Graph
 
-Add "JuanShaderGraph" to Custom Editor GUI under Graph Inspector -> Graph Settings
+Add `JuanShaderGraph` to Custom Editor GUI under Graph Inspector -> Graph Settings
 
 ![Image description](./resources/shadergraph_install.png)
 
@@ -108,13 +113,13 @@ Add "JuanShaderGraph" to Custom Editor GUI under Graph Inspector -> Graph Settin
 
 ### Folder
 
-- Folders must be closed by [Close] syntax
+- Folders must be closed by `[Close]` syntax
 
 - If only one parameter is given, the parameter will be the name of the Folder
 
-- If the second parameter is "True" (case insensitive), the Folder's icon will disappear and the Folder becomes a simple block
+- If the second parameter is `True`(case insensitive), the Folder's icon will disappear and the Folder becomes a simple block
 
-- If a property or a keyword is given and there's no thrid parameter, the Folder will be drawn if the value is "On"/1.0/Not-Null (case insensitive)
+- If a property or a keyword is given and there's no thrid parameter, the Folder will be drawn if the value is `On/1.0/Not-Null` (case insensitive)
 
 - If a third parameter is given, it will be used as condition
 
@@ -166,9 +171,9 @@ _MakeFloat3ToShowFolder6("Make This Float 3.0 to Show Folder 6", Float) = 1.0
 
 How to read it ?
 
-When we find [Folder] syntax, then look for the corresponding [Close] syntax, these two work together to form a complete folder 
+When we find `[Folder]` syntax, then look for the corresponding `[Close]` syntax, these two work together to form a complete folder 
 
-We can also put a "(folder name)" after Close to manually pair them up for readability
+We can also put a `(folder name)` after Close to manually pair them up for readability
 
 ![Image description](./resources/folderdemoappearance.png)
 
@@ -205,6 +210,15 @@ _Float("Float", Range(0, 1)) = 0
 
 ![Image description](./resources/conditionfolderdemoappearance.png)
 
+## ConditionBlock
+
+- Same feature as `ConditionFolder` but with inline styles
+  
+  | Syntax                                          | Drawer                                         |
+  |:----------------------------------------------- |:---------------------------------------------- |
+  | [ConditionBlock(_Property/_KEYWORD)]            | Condition Block                                |
+  | [ConditionBlock(_Property/_KEYWORD, Condition)] | Condition Block with Condition (On/Off, float) |
+
 ### FeatureFolder
 
 - FeatureFolder will draws a toggle in its right side to control a certain shader feature
@@ -227,13 +241,14 @@ _Color_Two("Color Two", Color) = (1,1,1,1)
 
 ### Texture
 
-- If a _KEYWORD is specified, the _KEYWORD will be enabled if the texture is assigned and disabled if texture is null
+- If a `_KEYWORD` is specified, the `_KEYWORD` will be enabled if the texture is assigned and disabled if texture is null
 
 | Syntax                               | Drawer                                                                          |
 |:------------------------------------ |:------------------------------------------------------------------------------- |
 | [Texture]                            | Thumbnail Texture                                                               |
 | [Texture(_Property)]                 | Texture with Inline Property                                                    |
 | [Texture(#_Property)]                | Texture with Hide-If-Null Property (Also works in other variants with property) |
+| [Texture(##_Property)]               | Texture with Hide-If-Not-Null Property                                          |
 | [Texture(_ColorName, HDR)]           | Texture with HDR Color                                                          |
 | [Texture(_KEYWORD)]                  | Texture with Keyword                                                            |
 | [Texture(_Property, _KEYWORD)]       | Texture with Prop, Keyword                                                      |
@@ -362,7 +377,7 @@ _Color_Two("Color Two", Color) = (1,1,1,1)
 
 ### Space & Separator
 
-- Unity has [Space] drawer, but it creates vertical space before the shader property. So I create an [EmptySpace] drawer, which omits the shader property and return a truly empty space. Because sometimes we want to put space or separator between folders not properties
+- Unity has `[Space]` drawer, but it creates vertical space before the shader property. So I create an `[EmptySpace]` drawer, which omits the shader property and return a truly empty space. Because sometimes we want to put space or separator between folders not properties
 
 | Syntax           | Drawer                      |
 |:---------------- |:--------------------------- |
@@ -382,49 +397,13 @@ _Color_Two("Color Two", Color) = (1,1,1,1)
 
 ![Image description](./resources/spaceandseparatorappearance.png)
 
-### Dedicated Drawers
-
-- Dedicated drawers normally won't be needed in custom shaders, unless making standard lit shader
-
-| Syntax                      | Drawer                   |
-|:--------------------------- |:------------------------ |
-| [ScaleOffset(_TextureName)] | Scale Offset             |
-| [CullMode]                  | Cull Mode                |
-| [QueueOffset]               | Queue Offset             |
-| [SurfaceType]               | Surface Type             |
-| [SpecularOcclusionMode]     | Specular Occlusion Mode  |
-| [DoubleSidedNormalMode]     | Double Sided Normal Mode |
-
-```
-[SurfaceType]_Surface ("Surface Type", Float) = 0.0
-
-[CullMode]_Cull ("Render Face", Float) = 2.0
-
-[ConditionFolder(_Cull, 0.0)] 
-[DoubleSidedNormalMode]_DoubleSidedNormalMode("Double-Sided Normal Mode", Float) = 1.0
-[Close] 
-
-[SpecularOcclusionMode] _SpecularOcclusionMode("Specular Occlusion Mode", Int) = 0
-[ConditionFolder(_SpecularOcclusionMode, 3)]
-_GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
-[Close]
-
-[QueueOffset]_QueueOffset ("Sorting Priority", Float) = 0.0
-
-[ScaleOffset(_MainTex)]_MainTexScaleOffset("Tiling & Offset", Vector) = (1,1,0,0)
-```
-
-![Image description](./resources/dedicatedappearance.png)
-
 ### ShaderGUI Demo
 
 - Simple demo of how all these drawers combined look
 
-- Advanced Options folder will always be drawn for global behavior control
+- Basically copied from Unity's `Lit.shader` and change the GUI
 
 - Find this at Shader -> ShaderGUI -> ShaderGUI Demo.shader
-
-![Image description](./resources/shaderguidemoclose.png)
 
 ![Image description](./resources/shaderguidemo.png)
 
@@ -434,7 +413,7 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 
 - In HLSL, the properties' references would be better to only contain one underscore in front while names contain consecutive underscores might be reserved
 
-- E.g. &BaseColor's reference sometimes will be __BaseColor by default containing two consecutive underscores (I try to reproduce this situation, but it doesn't happen every time)
+- E.g. `&BaseColor`'s reference sometimes will be `__BaseColor` by default containing two consecutive underscores (I try to reproduce this situation, but it doesn't happen every time)
 
 - If this happened, We should manually remove one underscore to avoid any unpredictable errors
 
@@ -446,7 +425,7 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 
 - Same feature as Shader version
 
-- If condition is not specified, We can put a "!" in front of _Property or _KEYWORD to invert condition
+- If condition is not specified, We can put a `!` in front of `_Property` or `_KEYWORD` to invert condition
 
 - The type of the property doesn't matter as long as it's exposed
 
@@ -460,9 +439,9 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 
 ![Image description](./resources/graphfolderblackboard.png)
 
-- How to read it ? When we found a [$], then look for the corresponding [Close] syntax.
+- How to read it ? When we found a [$], then look for the corresponding `[Close]` syntax.
 
-- In Shader Graph, it would be better to put a folder name after [Close] syntax. Because we need a property to implement a certain syntax, so we must make sure every property has different names
+- In Shader Graph, it would be better to put a folder name after `[Close]` syntax. Because we need a property to implement a certain syntax, so we must make sure every property has different names
 
 ![Image description](./resources/graphfolderappearance.png)
 
@@ -480,9 +459,21 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 
 ![Image description](./resources/graphconditionfolderappearance.png)
 
+### ConditionBlock
+
+- [!] -> ConditionBlock
+- Same feature as `ConditionFolder` but with inline styles
+
+| Syntax                                        | Drawer                                         |
+|:--------------------------------------------- |:---------------------------------------------- |
+| [!(_Property/_KEYWORD)]Random Name            | Condition Block                                |
+| [!(!_Property/_KEYWORD)]Random Name           | Condition Block Invert                         |
+| [!(_Property/_KEYWORD, Condition)]Random Name | Condition Block with Condition (On/Off, Float) |
+
 ### FeatureFolder
 
 - [+] -> FeatureFolder
+- When working with Unity version older than `2021.3`, we can't use `Boolean Keyword`. Use `boolean` instead and make reference uppercase. That's why some demo shaders' GUI are broken if used with older versions
 
 | Syntax                 | Drawer         |
 |:---------------------- |:-------------- |
@@ -495,15 +486,16 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 ### Texture
 
 - All texture will be Thumnail by default
-- Use double && before _InlineProperty to hide it if the texture is not given
+- Use double `&&` before _InlineProperty to hide it if the texture is not given
 - If we want a HDR Color, just make the following Color HDR
-- If the inline property is a _BOOLEANKEYWORD, it will be enabled if the texture is assigned and disabled is the texture is not given
+- If the inline property is a `_BOOLEANKEYWORD`, it will be enabled if the texture is assigned and disabled is the texture is not given
 
 | Syntax                               | Drawer                                                                          |
 |:------------------------------------ |:------------------------------------------------------------------------------- |
 | Texture will be Thumbnail by default | Thumbnail Texture                                                               |
 | &_InlineProperty                     | Texture with Inline Property                                                    |
 | &&_InlineProperty                    | Texture with Hide-If-Null Property (Also works in other variants with property) |
+| &!_InlineProperty                    | Texture with Hide-If-Not-Null Property                                          |
 | &_BOOLEANKEYWORD                     | Texture with Keyword                                                            |
 
 ![Image description](./resources/graphtextureblackboard.png)
@@ -572,27 +564,75 @@ _GIOcclusionBias("GI Occlusion Bias", Range(0.0, 1.0)) = 0.0
 
 - Simple demo of how all these drawers combined look
 
-- Advanced Options folder will always be drawn for global behavior control
-
 - Find this at Shader -> ShaderGraphGUI -> ShaderGraphGUI Demo.shadergraph
 
 ![Image description](./resources/shadergraphguiblackboard.png)
 
-![Image description](./resources/shadergraphguidemoclose.png)
-
 ![Image description](./resources/shadergraphguidemo.png)
 
-## Advanced Options
+## Surface Options & Advanced Options
 
-- Render Queue
+- If there're properties match Unity's naming convention, `Surface Options` or `Advanced Options` will be drawn
 
-- Enable GPU Instancing
+- All properties name should match Unity's default properties names
 
-- Double Sided Global Illumination
+- All corresponding keywords should match Unity's default names
 
-- Lightmap Emission Property
+- Dedicated/Special Drawers are removed
 
-- This will always be drawn to Shader/ShaderGraph GUI
+- Currently Only support URP, because HDRP has different naming convention and different features
+
+### Surface Options Properties
+
+| Property        | Drawer          |
+|:--------------- |:--------------- |
+| _WorkflowMode   | Workflow Mode   |
+| _Surface        | Surface Type    |
+| _Blend          | Blend Mode      |
+| _Cull           | Render Face     |
+| _SrcBlend       | \               |
+| _DstBlend       | \               |
+| _ZWriteControl  | Depth Write     |
+| _ZWrite         | \               |
+| _ZTest          | Depth Test      |
+| _AlphaClip      | Alpha Clipping  |
+| _Cutoff         | \               |
+| _ReceiveShadows | Receive Shadows |
+| _CastShadows    | Cast Shadows    |
+
+### Advanced Options Properties
+
+| Property                               | Drawer                  |
+|:-------------------------------------- |:----------------------- |
+| _SpecularHighlights                    | Specular Highlights     |
+| _EnvironmentReflections                | Environment Reflections |
+| _QueueControl                          | Queue Control           |
+| _QueueOffset                           | Sorting Priority        |
+| _EMISSION (Use this keyword to enable) | Global Illumination     |
+
+### Keywords
+
+Follow the naming convention below if want to properly enable corresponding features
+
+- _RECEIVE_SHADOWS_OFF
+
+- _SPECULAR_SETUP
+
+- _SURFACE_TYPE_TRANSPARENT
+
+- _ALPHATEST_ON
+
+- _EMISSION (Use this keyword to enable Global Illumination Drawer)
+
+- _ _ALPHAPREMULTIPLY_ON _ALPHAMODULATE_ON
+
+- _SPECULARHIGHLIGHTS_OFF
+
+- _ENVIRONMENTREFLECTIONS_OFF
+
+![Image description](./resources/surfaceoptions.png)
+
+![Image description](./resources/advancedoptions.png)
 
 ## License
 

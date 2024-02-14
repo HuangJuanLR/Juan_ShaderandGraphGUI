@@ -32,7 +32,7 @@ namespace JuanShaderEditor
 	{
 		public override void OnGUI(Rect position, MaterialProperty property, String label, MaterialEditor materialEditor)
 		{
-			EditorGUILayout.Space(-EditorGUIUtility.standardVerticalSpacing - EditorGUIUtility.singleLineHeight);
+			EditorGUILayout.Space(-EditorGUIUtility.standardVerticalSpacing * 2 - EditorGUIUtility.singleLineHeight);
 		}
 	}
 }

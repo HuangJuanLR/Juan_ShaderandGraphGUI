@@ -32,6 +32,22 @@ namespace JuanShaderEditor
 	    public static Color folderColor = new Color(0.85f, 0.85f, 0.85f, 1);
 	    public static Color labelColor = new Color(0.85f, 0.85f, 0.85f, 1);
 	    
+	    public static readonly GUIContent workflowModeLabel = new GUIContent("Workflow Mode");
+	    public static readonly GUIContent surfaceTypeLabel = new GUIContent("Surface Type");
+	    public static readonly GUIContent blendModeLabel = new GUIContent("Blend Mode");
+	    public static readonly GUIContent renderFaceLabel = new GUIContent("Render Face");
+	    public static readonly GUIContent depthWriteLabel = new GUIContent("Depth Write");
+	    public static readonly GUIContent depthTestLabel = new GUIContent("Depth Test");
+	    public static readonly GUIContent alphaClipLabel = new GUIContent("Alpha Clipping");
+	    public static readonly GUIContent castShadowLabel = new GUIContent("Cast Shadows");
+	    public static readonly GUIContent receiveShadowLabel = new GUIContent("Receive Shadows");
+	    public static readonly GUIContent alphaCutoffLabel = new GUIContent("Threshold");
+	    public static readonly GUIContent queueOffsetLabel = new GUIContent("Sorting Priority");
+	    public static readonly GUIContent queueControlLabel = new GUIContent("Queue Control");
+	    public static readonly GUIContent specularHighlightsLabel = new GUIContent("Specular Highlights");
+	    public static readonly GUIContent environmentReflectionsLabel = new GUIContent("Environment Reflections");
+
+	    
         public static GUIStyle FolderHeader;
         public static GUIStyle FeatureFolderHeader;
         public static GUIStyle TextFolder;

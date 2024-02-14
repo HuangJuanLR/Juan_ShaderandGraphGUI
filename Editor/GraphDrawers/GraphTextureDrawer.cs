@@ -29,10 +29,16 @@ namespace JuanShaderEditor
 	public class GraphTextureDrawer : PropertiesDrawer
 	{
 		private MaterialProperty extraProp;
+		private bool invert = false;
+		private bool conditional = false;
 
 		public GraphTextureDrawer(MaterialProperty extraProp)
 		{
 			this.extraProp = extraProp;
+			conditional = extraProp.displayName.Contains("&&") || 
+										extraProp.displayName.Contains("&!");
+
+			invert = extraProp.displayName.Contains("&!");
 		}
 		
 		public GraphTextureDrawer()
@@ -52,9 +58,9 @@ namespace JuanShaderEditor
 			{
 				if (!FindKeyword(extraProp))
 				{
-					if (extraProp.displayName.Contains("&&"))
+					if (conditional)
 					{
-						if (property.textureValue == null)
+						if (invert? property.textureValue != null : property.textureValue == null)
 						{
 							materialEditor.TexturePropertySingleLine(label, property);
 						}

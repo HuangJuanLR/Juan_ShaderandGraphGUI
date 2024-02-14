@@ -33,6 +33,7 @@ namespace JuanShaderEditor
         Color targetColor;
         private bool conditional = false;
         private bool isHDR = false;
+        private bool invert = false;
 
         private string keyword;
 
@@ -46,7 +47,13 @@ namespace JuanShaderEditor
             if (extraPropName.Contains("#"))
             {
                 conditional = true;
-                this.extraPropName = extraPropName.Substring(1);
+                this.extraPropName = extraPropName.Substring(1).Trim();
+
+                if (extraPropName.Contains("##"))
+                {
+                    invert = true;
+                    this.extraPropName = extraPropName.Substring(2).Trim();
+                }
             }
             else
             {
@@ -62,6 +69,12 @@ namespace JuanShaderEditor
             {
                 conditional = true;
                 this.extraPropName = extraPropName.Substring(1).Trim();
+                
+                if (extraPropName.Contains("##"))
+                {
+                    invert = true;
+                    this.extraPropName = extraPropName.Substring(2).Trim();
+                }
             }
             else
             {
@@ -86,6 +99,12 @@ namespace JuanShaderEditor
             {
                 conditional = true;
                 this.extraPropName = extraParm1.Substring(1).Trim();
+
+                if (extraPropName.Contains("##"))
+                {
+                    invert = true;
+                    this.extraPropName = extraParm1.Substring(2).Trim();
+                }
             }
             else
             {
@@ -93,7 +112,7 @@ namespace JuanShaderEditor
             }
         
             keyword = extraParm2;
-            this.isHDR = extraParm2.ToLower() == "hdr";
+            this.isHDR = extraParm3.ToLower() == "hdr";
             
         }
 
@@ -120,7 +139,7 @@ namespace JuanShaderEditor
                     }
                     else
                     {
-                        if (property.textureValue == null)
+                        if (invert? property.textureValue != null : property.textureValue == null)
                         {
                             materialEditor.TexturePropertySingleLine(prefixLabel, property);
                         }
@@ -145,7 +164,7 @@ namespace JuanShaderEditor
                     }
                     else
                     {
-                        if (property.textureValue != null)
+                        if (invert? property.textureValue == null : property.textureValue != null)
                         {
                             targetColor = EditorGUI.ColorField(colorFieldRect, colorLabel, targetColor, true, true, true);
                         }

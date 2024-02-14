@@ -887,11 +887,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[1]
       value: 
-      objectReference: {fileID: 2100000, guid: f5847c77ebcf0534cb18a8fcd629a5ed, type: 2}
+      objectReference: {fileID: 2100000, guid: 75fd6cbeddfcd1c41843ca437943b15d, type: 2}
     - target: {fileID: 919132149155446097, guid: e744492fc7c6fb9478002c8add31143e,
         type: 3}
       propertyPath: m_Name
-      value: CompleteDemo & SpecialDrawers
+      value: CompleteDemo
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

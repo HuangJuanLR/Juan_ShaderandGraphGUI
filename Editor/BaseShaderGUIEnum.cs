@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace JuanShaderEditor
 {
+    // Put these in a separate file in case Enum changing with Unity Version
     public enum BlendMode
     {
         Alpha,
@@ -48,4 +49,32 @@ namespace JuanShaderEditor
         Opaque,
         Transparent,
     }
+
+    public enum WorkflowMode
+    {
+        Specular,
+        Metallic,
+    }
+
+    public enum ZWriteControl
+    {
+        Auto,
+        ForceEnabled,
+        ForceDisabled,
+    }
+    
+    public enum QueueControl
+    {
+        Auto = 0,
+        UserOverride = 1
+    }
+    
+    public enum MaterialUpdateType
+    {
+        CreatedNewMaterial,
+        ChangedAssignedShader,
+        ModifiedShader,
+        ModifiedMaterial
+    }
+    
 }
