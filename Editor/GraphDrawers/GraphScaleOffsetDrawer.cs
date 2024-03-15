@@ -21,6 +21,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -31,12 +32,12 @@ namespace JuanShaderEditor
 		GUIContent tilingLabel = new GUIContent("Tiling", "Tiling");
 		GUIContent offsetLabel = new GUIContent("Offset", "Offset");
 		
-		public override void Draw(MaterialEditor materialEditor, Material material)
+		public override void Draw(MaterialEditor materialEditor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			if (!material.HasProperty(name)) return;
 			
-			var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
-			
+			// var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
+			var property = findProperty(name);
 			Rect position = EditorGUILayout.GetControlRect();
 
 			Vector4 scaleOffset = property.vectorValue;

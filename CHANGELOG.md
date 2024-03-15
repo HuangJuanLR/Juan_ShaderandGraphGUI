@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file
 
+## [1.02.0] - 2024-03-15
+
+### Fixed
+
+- Multi-value editing fixed
+
 ## [1.01.0] - 2024-02-14
 
 ### Added

@@ -22,6 +22,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -125,6 +126,7 @@ namespace JuanShaderEditor
             EditorGUILayout.Space(-EditorGUIUtility.standardVerticalSpacing - EditorGUIUtility.singleLineHeight);
             
             EditorGUI.BeginChangeCheck();
+            // EditorGUI.showMixedValue = true;
             
             EditorGUILayout.BeginHorizontal();
             {
@@ -132,22 +134,49 @@ namespace JuanShaderEditor
 
                 if (mat.HasProperty(extraPropName) && !isHDR)
                 {
-                    var prop = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { mat }, extraPropName);
-                    if (!conditional)
+                    // var targetColorProp = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { mat }, extraPropName);
+
+                    var allProps = MaterialEditor.GetMaterialProperties(materialEditor.targets);
+
+                    foreach (var targetProp in allProps)
                     {
-                        materialEditor.TexturePropertySingleLine(prefixLabel, property, prop);
-                    }
-                    else
-                    {
-                        if (invert? property.textureValue != null : property.textureValue == null)
+                        if (targetProp.name == extraPropName)
                         {
-                            materialEditor.TexturePropertySingleLine(prefixLabel, property);
-                        }
-                        else
-                        {
-                            materialEditor.TexturePropertySingleLine(prefixLabel, property, prop);
+                            if (!conditional)
+                            {
+                                materialEditor.TexturePropertySingleLine(prefixLabel, property, targetProp);
+                            }
+                            else
+                            {
+                                if (invert? property.textureValue != null : property.textureValue == null)
+                                {
+                                    materialEditor.TexturePropertySingleLine(prefixLabel, property);
+                                }
+                                else
+                                {
+                                    materialEditor.TexturePropertySingleLine(prefixLabel, property, targetProp);
+                                }
+                            }
                         }
                     }
+                    
+                    // if (!conditional)
+                    // {
+                    //     materialEditor.TexturePropertySingleLine(prefixLabel, property, targetColorProp);
+                    // }
+                    // else
+                    // {
+                    //     if (invert? property.textureValue != null : property.textureValue == null)
+                    //     {
+                    //         materialEditor.TexturePropertySingleLine(prefixLabel, property);
+                    //     }
+                    //     else
+                    //     {
+                    //         materialEditor.TexturePropertySingleLine(prefixLabel, property, targetColorProp);
+                    //     }
+                    // }
+
+                    
                 }
                 else if (mat.HasProperty(extraPropName) && isHDR)
                 {
@@ -157,7 +186,9 @@ namespace JuanShaderEditor
                     
                     Rect colorFieldRect = MaterialEditor.GetRectAfterLabelWidth(position);
                     GUIContent colorLabel = new GUIContent();
-
+                    
+                    // var targetColorProp = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { mat }, extraPropName);
+                    
                     if (!conditional)
                     {
                         targetColor = EditorGUI.ColorField(colorFieldRect, colorLabel, targetColor, true, true, true);
@@ -186,23 +217,48 @@ namespace JuanShaderEditor
 
                 if (mat.HasProperty(extraPropName) && isHDR)
                 {
-                    mat.SetColor(extraPropName, targetColor);
+                    var allProps = MaterialEditor.GetMaterialProperties(materialEditor.targets);
+
+                    foreach (var targetProp in allProps)
+                    {
+                        if (targetProp.name == extraPropName)
+                        {
+                            // mat.SetColor(extraPropName, targetColor);
+                            targetProp.colorValue = targetColor;
+                        }
+                    }
+                    
                 }
                 
                 // If keyword is specified, enable/disable it based on texture value
                 if (keyword != null && !mat.HasProperty(keyword))
                 {
-                    if (property.textureValue != null)
+                    var materials = materialEditor.targets.OfType<Material>().ToArray();
+
+                    foreach (var targetMaterial in materials)
                     {
-                        mat.EnableKeyword(keyword);
+                        if (property.textureValue != null)
+                        {
+                            targetMaterial.EnableKeyword(keyword);
+                        }
+                        else
+                        {
+                            targetMaterial.DisableKeyword(keyword);
+                        }
                     }
-                    else
-                    {
-                        mat.DisableKeyword(keyword);
-                    }
+                    
+                    // if (property.textureValue != null)
+                    // {
+                    //     mat.EnableKeyword(keyword);
+                    // }
+                    // else
+                    // {
+                    //     mat.DisableKeyword(keyword);
+                    // }
                     
                 }
             }
+            // EditorGUI.showMixedValue = false;
         }
     }
 }

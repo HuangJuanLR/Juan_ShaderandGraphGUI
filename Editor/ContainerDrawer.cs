@@ -21,6 +21,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -36,6 +37,9 @@ namespace JuanShaderEditor
 		private List<IUniversalDrawer> drawers;
 
 		public int Level => level;
+		
+		protected string name;
+		public string Name => name;
 
 		public bool Containable => true;
 		
@@ -63,11 +67,11 @@ namespace JuanShaderEditor
 			this.container = container;
 		}
 
-		public void Draw(MaterialEditor editor, Material material)
+		public void Draw(MaterialEditor editor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			for (var i = 0; i < drawers.Count; i++)
 			{
-				drawers[i].Draw(editor, material);
+				drawers[i].Draw(editor, material, findProperty);
 			}
 		}
 	}

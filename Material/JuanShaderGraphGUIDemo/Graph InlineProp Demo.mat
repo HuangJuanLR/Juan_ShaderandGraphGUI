@@ -186,6 +186,6 @@ Material:
     - __3Vector3: {r: 0, g: 0, b: 0, a: 0}
     - __4Vector4: {r: 0, g: 0, b: 0, a: 0}
     - __ColorAfterTexture: {r: 1, g: 1, b: 1, a: 1}
-    - __RemappingVector2: {r: -0.5426599, g: 1.693164, b: 0, a: 0}
+    - __RemappingVector2: {r: -0.66357446, g: 1.6931639, b: 0, a: 0}
     - __Vector4AfterTexture: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

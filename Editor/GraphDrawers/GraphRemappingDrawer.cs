@@ -21,6 +21,8 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -38,11 +40,12 @@ namespace JuanShaderEditor
 			this.displayName = displayName;
 		}
 		
-		public override void Draw(MaterialEditor materialEditor, Material material)
+		public override void Draw(MaterialEditor materialEditor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			if (!material.HasProperty(name)) return;
 			
-			var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
+			// var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
+			var property = findProperty(name);
 			var shader = material.shader;
 			
 			var vectorValue = property.vectorValue;
@@ -96,10 +99,18 @@ namespace JuanShaderEditor
 			{
 				Undo.RegisterCompleteObjectUndo(material, "Change Remapping");
 				property.vectorValue = vectorValue;
+				
+				var materials = materialEditor.targets.OfType<Material>().ToArray();
 
+				foreach (var targetMaterial in materials)
+				{
+					string curVector2Name = targetMaterial.GetHashCode() + "_" + property.name + "_" + "remapping";
+
+					remappingMinMaxVectors[curVector2Name] = remappingMinMax;
+				}
 			}
 			
-			remappingMinMaxVectors[vector2Name] = remappingMinMax;
+			// remappingMinMaxVectors[vector2Name] = remappingMinMax;
 				
 			
 		}

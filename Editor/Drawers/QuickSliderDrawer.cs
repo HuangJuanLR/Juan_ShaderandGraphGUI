@@ -22,6 +22,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using System.Collections.Generic;
@@ -119,9 +120,18 @@ namespace JuanShaderEditor
 			if (EditorGUI.EndChangeCheck())
 			{
 				property.floatValue = floatValue;
+				
+				var materials = materialEditor.targets.OfType<Material>().ToArray();
+
+				foreach (var targetMaterial in materials)	
+				{
+					string curVector2Name = targetMaterial.GetHashCode() + "_" + property.name + "_" + "slider";
+
+					minMaxVectors[curVector2Name] = sliderMinMax;
+				}
 			}
 
-			minMaxVectors[vector2Name] = sliderMinMax;
+			// minMaxVectors[vector2Name] = sliderMinMax;
 		}
 	}
 }

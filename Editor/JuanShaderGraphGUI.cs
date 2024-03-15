@@ -114,7 +114,7 @@ namespace JuanShaderEditor
 
             if (hasSurfaceOptions)
             {
-                DrawFolder("Surface Options", () =>
+                DrawFolder(materialEditor, "Surface Options", () =>
                 {
                     DrawSurfaceOptions(material, materialEditor, properties);
                 });
@@ -122,9 +122,9 @@ namespace JuanShaderEditor
             
             if (Event.current.type == EventType.Layout) containerDrawer = BuildDrawer(material, properties);
             
-            containerDrawer.Draw(materialEditor, material);
+            containerDrawer.Draw(materialEditor, material, name => FindProperty(name, properties));
             
-            DrawFolder("Advanced Options", () =>
+            DrawFolder(materialEditor, "Advanced Options", () =>
             {
                 DrawAdvancedOptions(material, materialEditor, properties);
             });

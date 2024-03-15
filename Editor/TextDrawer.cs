@@ -79,7 +79,7 @@ namespace JuanShaderEditor
 		{
 		}
 
-		public void Draw(MaterialEditor editor, Material material)
+		public void Draw(MaterialEditor editor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			if(type == "info")
 			{

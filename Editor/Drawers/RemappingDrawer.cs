@@ -22,11 +22,10 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using Vector2 = UnityEngine.Vector2;
-using Vector4 = UnityEngine.Vector4;
 
 namespace JuanShaderEditor
 {
@@ -69,7 +68,6 @@ namespace JuanShaderEditor
             Rect sliderMaxRect = new Rect(sliderMaxStartX, position.y, remainWidth * 0.05f, position.height);
             
             EditorGUI.BeginChangeCheck();
-        
             EditorGUILayout.BeginHorizontal();
             {
                 
@@ -123,19 +121,47 @@ namespace JuanShaderEditor
             if (EditorGUI.EndChangeCheck())
             {
                 Undo.RegisterCompleteObjectUndo(mat, "Change Remapping");
+                
+                var materials = materialEditor.targets.OfType<Material>().ToArray();
+                
                 if (property.type == MaterialProperty.PropType.Float)
                 {
-                    mat.SetFloat(minPropName, min);
-                    mat.SetFloat(maxPropName, max);
+                    foreach (var targetMaterial in materials)
+                    {
+                        targetMaterial.SetFloat(minPropName, min);
+                        targetMaterial.SetFloat(maxPropName, max);
+
+                        string curVector2Name = targetMaterial.GetHashCode() + "_" + property.name + "_" + "remapping";
+
+                        remappingMinMaxVectors[curVector2Name] = remappingMinMax;
+                    }
+
+                    // mat.SetFloat(minPropName, min);
+                    // mat.SetFloat(maxPropName, max);
                 }
                 else if (property.type == MaterialProperty.PropType.Vector)
                 {
-                    property.vectorValue = vectorValue;
+                    var allProps = MaterialEditor.GetMaterialProperties(materialEditor.targets);
+
+                    foreach (var targetProp in allProps)
+                    {
+                        if (targetProp.name == property.name)
+                        {
+                            targetProp.vectorValue = vectorValue;
+                        }
+                    }
+                    
+                    foreach (var targetMaterial in materials)
+                    {
+                        string curVector2Name = targetMaterial.GetHashCode() + "_" + property.name + "_" + "remapping";
+
+                        remappingMinMaxVectors[curVector2Name] = remappingMinMax;
+                    }
+                    
+                    // property.vectorValue = vectorValue;
                 }
-                
+                // remappingMinMaxVectors[vector2Name] = remappingMinMax;
             }
-            
-            remappingMinMaxVectors[vector2Name] = remappingMinMax;
         }
         
     }

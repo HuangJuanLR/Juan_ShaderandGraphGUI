@@ -22,6 +22,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -49,7 +50,7 @@ namespace JuanShaderEditor
 		}
 		
 
-		public override void Draw(MaterialEditor editor, Material material)
+		public override void Draw(MaterialEditor editor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			var active = material.IsKeywordEnabled(keyword);
 			
@@ -84,26 +85,54 @@ namespace JuanShaderEditor
 			EditorGUI.BeginChangeCheck();
 			
 			active = EditorGUI.Toggle(rect, active);
+			
+			var materials = editor.targets.OfType<Material>().ToArray();
 
 			if (EditorGUI.EndChangeCheck())
 			{
-				if (active)
+				
+				
+				foreach (var targetMaterial in materials)
 				{
-					material.EnableKeyword(keyword);
+					if (targetMaterial == null) continue;
+					
+					if (active)
+					{
+						targetMaterial.EnableKeyword(keyword);
+					}
+					else
+					{
+						targetMaterial.DisableKeyword(keyword);
+					}
+					
+					if (targetMaterial.HasProperty(keyword))
+					{
+						targetMaterial.SetFloat(keyword, active? 1.0f:0.0f);
+					}
 				}
-				else
-				{
-					material.DisableKeyword(keyword);
-				}
-
-				if (material.HasProperty(keyword))
-				{
-					material.SetFloat(keyword, active? 1.0f:0.0f);
-				}
+				
+				// if (active)
+				// {
+				// 	material.EnableKeyword(keyword);
+				// }
+				// else
+				// {
+				// 	material.DisableKeyword(keyword);
+				// }
+				//
+				// if (material.HasProperty(keyword))
+				// {
+				// 	material.SetFloat(keyword, active? 1.0f:0.0f);
+				// }
 			}
 			EditorGUILayout.EndFoldoutHeaderGroup();
-
-			toggles[toggleName] = toggle;
+			
+			foreach (var targetMaterial in materials)
+			{
+				string curToggleName = targetMaterial.GetHashCode() + "_" + label;
+				toggles[curToggleName] = toggle;
+			}
+			// toggles[toggleName] = toggle;
 
 			GUI.backgroundColor = ShaderGUIStyle.folderColor;
 
@@ -113,7 +142,7 @@ namespace JuanShaderEditor
 
 				for (var i = 0; i < drawers.Count; i++)
 				{
-					drawers[i].Draw(editor, material);
+					drawers[i].Draw(editor, material, findProperty);
 				}
 
 				EditorGUILayout.EndVertical();

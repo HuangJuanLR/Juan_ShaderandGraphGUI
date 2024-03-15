@@ -26,6 +26,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using Codice.Client.Common;
 using JuanShaderEditor;
 
 namespace JuanShaderEditor
@@ -44,7 +45,7 @@ namespace JuanShaderEditor
 
 			if (hasSurfaceOptions)
 			{
-				DrawFolder("Surface Options", () =>
+				DrawFolder(materialEditor, "Surface Options", () =>
 				{
 					DrawSurfaceOptions(material, materialEditor, properties);
 				});
@@ -59,10 +60,11 @@ namespace JuanShaderEditor
 		        return;
 	        }
 	        
-	        containerDrawer.Draw(materialEditor, material);
+	        // containerDrawer.Draw(materialEditor, material, FindProperty(containerDrawer.Name, properties));
+	        containerDrawer.Draw(materialEditor, material, name => FindProperty(name, properties));
 
 	        // Recreate Unity's Default Advanced Options Folder
-	        DrawFolder("Advanced Options", () => 
+	        DrawFolder(materialEditor, "Advanced Options", () => 
 	        {
 		        DrawAdvancedOptions(material, materialEditor, properties);
 	        });

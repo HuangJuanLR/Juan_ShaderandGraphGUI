@@ -21,6 +21,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -33,12 +34,12 @@ namespace JuanShaderEditor
 			this.displayName = displayName;
 		}
 		
-		public override void Draw(MaterialEditor materialEditor, Material material)
+		public override void Draw(MaterialEditor materialEditor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			if (!material.HasProperty(name)) return;
 			
-			var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
-			
+			// var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
+			var property = findProperty(name);
 			Vector2 vector2 = property.vectorValue;
 			GUIContent label = new GUIContent(displayName);
 			EditorGUI.BeginChangeCheck();
@@ -61,12 +62,12 @@ namespace JuanShaderEditor
 			this.displayName = displayName;
 		}
 		
-		public override void Draw(MaterialEditor materialEditor, Material material)
+		public override void Draw(MaterialEditor materialEditor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			if (!material.HasProperty(name)) return;
 			
-			var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
-			
+			// var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
+			var property = findProperty(name);
 			Vector3 vector3 = property.vectorValue;
 			GUIContent label = new GUIContent(displayName);
 			EditorGUI.BeginChangeCheck();
@@ -89,12 +90,12 @@ namespace JuanShaderEditor
 			this.displayName = displayName;
 		}
 		
-		public override void Draw(MaterialEditor materialEditor, Material material)
+		public override void Draw(MaterialEditor materialEditor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			if (!material.HasProperty(name)) return;
 			
-			var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
-			
+			// var property = MaterialEditor.GetMaterialProperty(new UnityEngine.Object[] { material }, name);
+			var property = findProperty(name);
 			Vector4 vector4 = property.vectorValue;
 			GUIContent label = new GUIContent(displayName);
 			EditorGUI.BeginChangeCheck();

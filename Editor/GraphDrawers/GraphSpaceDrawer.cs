@@ -21,7 +21,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
-using System.Collections.Generic;
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -34,7 +34,7 @@ namespace JuanShaderEditor
 		{
 			this.height = height;
 		}
-		public override void Draw(MaterialEditor materialEditor, Material material)
+		public override void Draw(MaterialEditor materialEditor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			EditorGUILayout.Space(height);
 		}

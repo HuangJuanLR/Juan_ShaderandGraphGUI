@@ -422,7 +422,7 @@ namespace JuanShaderEditor
 		    return opaque;
 	    }
 	    
-	    protected void DrawFolder(string label, Action draw)
+	    protected void DrawFolder(MaterialEditor materialEditor, string label, Action draw)
 	    {
 		    EditorGUILayout.BeginVertical(ShaderGUIStyle.Folder);
 		    {
@@ -444,7 +444,13 @@ namespace JuanShaderEditor
 
 			    EditorGUILayout.EndFoldoutHeaderGroup();
 				
-			    toggles[toggleName] = toggle;
+			    var materials = materialEditor.targets.OfType<Material>().ToArray();
+			    foreach (var targetMaterial in materials)
+			    {
+				    string curToggleName = targetMaterial.GetHashCode() + "_" + label;
+				    toggles[curToggleName] = toggle;
+			    }
+			    // toggles[toggleName] = toggle;
 
 			    GUI.backgroundColor = ShaderGUIStyle.folderColor;
 

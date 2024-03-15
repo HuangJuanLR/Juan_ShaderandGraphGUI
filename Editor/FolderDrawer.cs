@@ -22,6 +22,7 @@ OTHER DEALINGS IN THE SOFTWARE.
 */
 
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -111,7 +112,7 @@ namespace JuanShaderEditor
 			folderStyle = level == 1 ? ShaderGUIStyle.Folder : ShaderGUIStyle.NestedFolder;
 		}
 
-		public virtual void Draw(MaterialEditor editor, Material material)
+		public virtual void Draw(MaterialEditor editor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			Material mat = editor.target as Material;
 			string targetFeature = feature;
@@ -204,7 +205,14 @@ namespace JuanShaderEditor
 										alwaysOn? ShaderGUIStyle.AlwaysOnHeader : ShaderGUIStyle.FolderHeader);
 				
 				EditorGUILayout.EndFoldoutHeaderGroup();
-				toggles[toggleName] = toggle;
+				
+				var materials = editor.targets.OfType<Material>().ToArray();
+				foreach (var targetMaterial in materials)
+				{
+					string curToggleName = targetMaterial.GetHashCode() + "_" + data;
+					toggles[curToggleName] = toggle;
+				}
+				// toggles[toggleName] = toggle;
 
 				GUI.backgroundColor = ShaderGUIStyle.folderColor;
 
@@ -214,7 +222,7 @@ namespace JuanShaderEditor
 					{
 						for (var i = 0; i < drawers.Count; i++)
 						{
-							drawers[i].Draw(editor, material);
+							drawers[i].Draw(editor, material, findProperty);
 						}
 					}
 					EditorGUILayout.EndVertical();

@@ -37,6 +37,8 @@ namespace JuanShaderEditor
 		private List<IUniversalDrawer> drawers;
 
 		public int Level => level;
+		protected string name;
+		public string Name => name;
 
 		public virtual bool Containable => true;
 		
@@ -93,7 +95,7 @@ namespace JuanShaderEditor
 			drawers.Add(drawer);
 		}
 
-		public void Draw(MaterialEditor editor, Material material)
+		public void Draw(MaterialEditor editor, Material material, Func<string, MaterialProperty> findProperty)
 		{
 			Material mat = editor.target as Material;
 			string targetFeature = feature;
@@ -158,7 +160,7 @@ namespace JuanShaderEditor
 				GUI.backgroundColor = ShaderGUIStyle.labelColor;
 				for (var i = 0; i < drawers.Count; i++)
 				{
-					drawers[i].Draw(editor, material);
+					drawers[i].Draw(editor, material, findProperty);
 				}
 			}
 

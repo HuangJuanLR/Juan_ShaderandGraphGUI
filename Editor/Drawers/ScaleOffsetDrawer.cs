@@ -21,6 +21,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -84,14 +85,37 @@ namespace JuanShaderEditor
             {
                 Undo.RegisterCompleteObjectUndo(mat, "MainTex ST Changed");
                 Vector4 newScaleOffset = new Vector4(tilling.x, tilling.y, offset.x, offset.y);
-
-                if (mat.HasProperty(texName))
+                
+                var materials = materialEditor.targets.OfType<Material>().ToArray();
+                
+                foreach (var targetMaterial in materials)
                 {
-                    mat.SetTextureOffset(texName, offset);
-                    mat.SetTextureScale(texName, tilling);
+                    if (targetMaterial.HasProperty(texName))
+                    {
+                        targetMaterial.SetTextureOffset(texName, offset);
+                        targetMaterial.SetTextureScale(texName, tilling);
+                        
+                        targetMaterial.SetVector(property.name, newScaleOffset);
+                    }
                 }
                 
-                property.vectorValue = newScaleOffset;
+                // if (mat.HasProperty(texName))
+                // {
+                //     mat.SetTextureOffset(texName, offset);
+                //     mat.SetTextureScale(texName, tilling);
+                // }
+                
+                // var allProps = MaterialEditor.GetMaterialProperties(materialEditor.targets);
+                //
+                // foreach (var targetProp in allProps)
+                // {
+                //     if (targetProp.name == property.name)
+                //     {
+                //         // targetProp.vectorValue = newScaleOffset;
+                //         Debug.Log(targetProp);
+                //     }
+                // }
+                // property.vectorValue = newScaleOffset;
             }
         }
     }

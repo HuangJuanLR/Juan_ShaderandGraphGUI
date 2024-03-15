@@ -21,6 +21,7 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 */
 
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,7 +30,7 @@ namespace JuanShaderEditor
     public interface IUniversalDrawer
     {
         void SetContainer(IUniversalDrawer container);
-        void Draw(MaterialEditor editor, Material material);
+        void Draw(MaterialEditor editor, Material material, Func<string, MaterialProperty> findProperty);
         void Init(string data);
         int Level { get; }
         bool Containable { get; }
